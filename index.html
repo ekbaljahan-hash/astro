@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CosmosLab — For Future Scientists & Explorers</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- THEME WELCOME MODAL -->
+  <div id="welcomeModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-logo">🔭</div>
+      <h1>Welcome to CosmosLab</h1>
+      <p>Your universe of discovery. Choose your experience:</p>
+      <div class="theme-choice-btns">
+        <button onclick="chooseTheme('dark')" class="btn-dark-pick">
+          <span>🌌</span> Dark Space
+        </button>
+        <button onclick="chooseTheme('light')" class="btn-light-pick">
+          <span>☁️</span> Daylight Sky
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAR CANVAS (dark theme) -->
+  <div id="starField" class="star-field" aria-hidden="true">
+    <div class="stars s1"></div>
+    <div class="stars s2"></div>
+    <div class="stars s3"></div>
+    <div id="shootingStar" class="shooting-star"></div>
+  </div>
+
+  <!-- CLOUD LAYER (light theme) -->
+  <div id="cloudLayer" class="cloud-layer" aria-hidden="true">
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+    <div class="cloud c4"></div>
+    <div class="cloud c5"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="nav-logo">🪐</span>
+      <span class="nav-title">CosmosLab</span>
+    </div>
+    <div class="nav-links">
+      <a href="#discover">Discover</a>
+      <a href="#didyouknow">Did You Know</a>
+      <a href="#explore">Explore Web</a>
+      <a href="#" onclick="openSettings()" class="settings-link">⚙️ Settings</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <p class="hero-sub">For the endlessly curious mind</p>
+      <h1 class="hero-title">Explore the <span class="accent">Universe</span></h1>
+      <p class="hero-desc">Rare phenomena. Hidden theories. Objects no one talks about. Dive deep into the cosmos every single day.</p>
+      <button class="btn-learn-new" onclick="openLearnNew()">
+        ✨ Try Learning Something New
+      </button>
+    </div>
+    <div class="hero-scroll-hint">↓ Scroll to Explore</div>
+  </section>
+
+  <!-- LEARN SOMETHING NEW MODAL -->
+  <div id="learnModal" class="modal-overlay hidden">
+    <div class="modal-box learn-box">
+      <button class="modal-close" onclick="closeLearnNew()">✕</button>
+      <div id="learnBadge" class="learn-badge">Rare Phenomenon</div>
+      <img id="learnImg" src="" alt="" class="learn-img" />
+      <h2 id="learnTitle" class="learn-title"></h2>
+      <p id="learnDesc" class="learn-desc"></p>
+      <div class="learn-actions">
+        <a id="learnMore" href="#" target="_blank" rel="noopener" class="btn-wiki">📖 Learn More →</a>
+        <button onclick="shuffleLearn()" class="btn-shuffle">🎲 Show Another</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DISCOVER SECTION (100+ cards) -->
+  <section class="section" id="discover">
+    <div class="section-header">
+      <h2>🌌 Discover</h2>
+      <p>Over 100 rare theories, objects & phenomena — filtered to the most mind-bending</p>
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterCards('all', this)">All</button>
+        <button class="filter-btn" onclick="filterCards('phenomenon', this)">Phenomena</button>
+        <button class="filter-btn" onclick="filterCards('theory', this)">Theories</button>
+        <button class="filter-btn" onclick="filterCards('object', this)">Objects</button>
+        <button class="filter-btn" onclick="filterCards('mission', this)">Missions</button>
+        <button class="filter-btn" onclick="filterCards('engineer', this)">Engineering</button>
+      </div>
+    </div>
+    <div class="cards-grid" id="discoverGrid"></div>
+  </section>
+
+  <!-- DID YOU KNOW SECTION -->
+  <section class="section alt-section" id="didyouknow">
+    <div class="section-header">
+      <h2>💡 Did You Know?</h2>
+      <p>Scroll through space facts that will change how you see the universe</p>
+    </div>
+    <div id="dykContainer" class="dyk-container"></div>
+  </section>
+
+  <!-- EXPLORE THE WEB SECTION -->
+  <section class="section" id="explore">
+    <div class="section-header">
+      <h2>🚀 Explore the Web</h2>
+      <p>The best space, science & engineering websites on the internet — handpicked for the obsessively curious</p>
+    </div>
+    <div class="web-grid" id="webGrid"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="nav-logo">🪐</span>
+      <span>CosmosLab — Built for the endlessly curious.</span>
+      <span class="footer-quote">"The universe is under no obligation to make sense to you." — Neil deGrasse Tyson</span>
+    </div>
+  </footer>
+
+  <!-- SETTINGS PANEL -->
+  <div id="settingsPanel" class="settings-panel hidden">
+    <div class="settings-inner">
+      <div class="settings-header">
+        <h3>⚙️ Settings</h3>
+        <button onclick="closeSettings()">✕</button>
+      </div>
+      <div class="settings-row">
+        <span>Theme</span>
+        <div class="theme-toggle-wrap">
+          <button id="btnDark" onclick="setTheme('dark')" class="theme-opt active-theme">🌌 Dark</button>
+          <button id="btnLight" onclick="setTheme('light')" class="theme-opt">☁️ Light</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <span>Reset first-visit prompt</span>
+        <button onclick="resetVisit()" class="btn-reset">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
